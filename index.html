@@ -57,7 +57,12 @@
   #field .drift { animation: drift var(--dur) ease-in-out infinite alternate; }
   @keyframes drift { to { transform: translate(var(--dx), var(--dy)); } }
   #field .lab { font: 10.5px "JetBrains Mono", monospace; fill: var(--col); opacity: .7; letter-spacing: .04em; transition: opacity .3s; pointer-events: none; }
-  .cl-hint { font: .74rem "JetBrains Mono", monospace; color: var(--muted); letter-spacing: .02em; }
+  #field .ring { fill: none; stroke: var(--col); stroke-width: 1.2; opacity: 0; transform-box: fill-box; transform-origin: center; pointer-events: none; }
+  #field.touring .cl:not(.tour) .pts { opacity: .45; }
+  #field .cl.tour .pts { transform: scale(1.08); opacity: 1; }
+  #field .cl.tour .lab { opacity: 1; }
+  #field .cl.tour .ring { animation: ripple 1.5s ease-out; }
+  @keyframes ripple { 0% { opacity: .55; transform: scale(.7); } 100% { opacity: 0; transform: scale(1.35); } }
   #field.hovering .cl:not(.on) { opacity: .28; }
   #field .cl.on .pts { transform: scale(1.1); opacity: 1; }
   #field .cl.on .lab, #field .cl:focus-visible .lab { opacity: 1; text-decoration: underline; }
@@ -242,7 +247,7 @@
     .pub { grid-template-columns: 1fr; gap: 6px; }
     .traj-grid { grid-template-columns: 1fr; }
     #field { width: 100%; opacity: .3; pointer-events: none; }
-    #field .lab, .cl-hint { display: none; }
+    #field .lab, #field .ring { display: none; }
   }
   @media (max-width: 560px) {
     .nav ul { gap: 16px; }
@@ -254,7 +259,7 @@
     .reveal, .step { opacity: 1; transform: none; transition: none; }
     .tree .draw { stroke-dashoffset: 0; }
     .canvas .fig { transition: none; }
-    #field .drift, #field .cl.press .pts { animation: none; }
+    #field .drift, #field .cl.press .pts, #field .cl.tour .ring { animation: none; }
   }
 </style>
 </head>
@@ -289,7 +294,6 @@
   <div class="foot">
     <div class="wrap">
       <div class="tags"><span>Post-bac RA · BCBU, Zewail City</span><span>B.Sc. Magna Cum Laude</span><span>Applying to PhD programs</span><span>Giza, Egypt</span></div>
-      <div class="cl-hint">each cluster is a chapter · click one ↗</div>
     </div>
   </div>
 </div>
@@ -540,7 +544,7 @@ const PROJECTS = [
 const TOOLS = {
   "Languages": { "Python": [3, 1, 3, 3], "R": [3, 3, 0, 2], "Git / GitHub": [2, 2, 2, 2] },
   "Single-cell": { "Seurat": [3, 3, 0, 0], "SingleCellExperiment": [2, 0, 0, 0], "Scanpy": [2, 0, 0, 0], "Splatter": [3, 0, 0, 0], "Monocle3": [2, 0, 0, 0], "CellChat": [0, 3, 0, 0], "inferCNV": [0, 3, 0, 0] },
-  "ML & interpretability": { "PyTorch / TensorFlow": [0, 0, 3, 3], "scikit-learn": [0, 0, 1, 2], "LIME": [0, 0, 3, 2], "SHAP": [0, 0, 0, 3] }
+  "ML & interpretability": { "PyTorch / TensorFlow": [0, 0, 3, 3], "scikit-learn": [0, 0, 2, 2], "LIME": [0, 0, 3, 3], "SHAP": [0, 0, 0, 1] }
 };
 const LEARNING = ["LangGraph · LangChain"];
 
@@ -577,12 +581,23 @@ const gaussFrom = r => () => { let u = 0, v = 0; while (!u) u = r(); while (!v) 
   svg.innerHTML = `<g class="noise">${noise}</g>` + C.map((c, k) => `
     <g class="cl" data-k="${k}" tabindex="0" role="link" aria-label="Go to chapter ${c.label}" style="--col:var(${c.col});--dx:${(r() * 8 - 4).toFixed(1)}px;--dy:${(r() * 8 - 4).toFixed(1)}px;--dur:${(7 + r() * 5).toFixed(1)}s">
       <ellipse class="hit" cx="${c.x}" cy="${c.y}" rx="${c.sx * 2.5 + 10}" ry="${c.sy * 2.5 + 10}" transform="rotate(${(c.rot * 57.3).toFixed(0)} ${c.x} ${c.y})"/>
+      <ellipse class="ring" cx="${c.x}" cy="${c.y}" rx="${c.sx * 2.3}" ry="${c.sy * 2.3}" transform="rotate(${(c.rot * 57.3).toFixed(0)} ${c.x} ${c.y})"/>
       <g class="drift"><g class="pts">${pts[k]}</g></g>
       <text class="lab" x="${c.lx}" y="${c.ly}">${c.label}</text>
     </g>`).join("");
 
   const groups = [...svg.querySelectorAll(".cl")];
-  const focus = k => { svg.classList.toggle("hovering", k !== null); groups.forEach((gr, j) => gr.classList.toggle("on", j === k)); };
+  // gentle "tour": clusters light up one by one (01 → 04) with a ripple, then rest; stops for good once someone interacts
+  let touring = !reduce && matchMedia("(hover: hover)").matches, tourTimer = null;
+  const stopTour = () => { touring = false; clearTimeout(tourTimer); svg.classList.remove("touring"); groups.forEach(g => g.classList.remove("tour")); };
+  const tour = (k = 0) => {
+    if (!touring) return;
+    if (k === groups.length) { svg.classList.remove("touring"); groups.forEach(g => g.classList.remove("tour")); tourTimer = setTimeout(() => tour(0), 5000); return; }
+    svg.classList.add("touring"); groups.forEach((g, j) => g.classList.toggle("tour", j === k));
+    tourTimer = setTimeout(() => tour(k + 1), 1500);
+  };
+  if (touring) tourTimer = setTimeout(() => tour(0), 1400);
+  const focus = k => { if (k !== null) stopTour(); svg.classList.toggle("hovering", k !== null); groups.forEach((gr, j) => gr.classList.toggle("on", j === k)); };
   const go = k => {
     const gr = groups[k]; gr.classList.remove("press"); void gr.getBBox(); gr.classList.add("press");
     setTimeout(() => document.querySelector(`.step[data-i="${k}"]`).scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }), reduce ? 0 : 260);
