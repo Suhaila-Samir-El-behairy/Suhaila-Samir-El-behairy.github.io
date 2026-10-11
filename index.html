@@ -156,6 +156,19 @@
   .pub .t { font-weight: 600; font-size: 1.12rem; line-height: 1.35; margin: 0 0 6px; }
   .pub .a { color: var(--muted); font-size: .92rem; margin: 0; }
   .pub .a strong { color: var(--text); font-weight: 500; }
+  .code { margin-top: 72px; }
+  .code h3 { font-weight: 700; font-size: 1.5rem; letter-spacing: -.02em; margin: 0 0 18px; }
+  .code h3 em { color: var(--accent); }
+  .repo { display: grid; grid-template-columns: 220px 1fr auto; gap: 20px; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--line); text-decoration: none; transition: padding-left .25s; }
+  .repo:last-of-type { border-bottom: 1px solid var(--line); }
+  .repo:hover { padding-left: 8px; }
+  .repo:hover .rn, .repo:hover .ra { color: var(--accent); }
+  .repo .rn { font: 500 .88rem "JetBrains Mono", monospace; }
+  .repo .rd { color: var(--muted); font-size: .95rem; }
+  .repo .ra { color: var(--muted); }
+  .code .more { display: inline-block; margin-top: 16px; font: .8rem "JetBrains Mono", monospace; color: var(--muted); text-decoration: none; }
+  .code .more:hover { color: var(--accent); }
+  @media (max-width: 900px) { .repo { grid-template-columns: 1fr auto; gap: 4px 12px; } .repo .rd { grid-column: 1; grid-row: 2; } .repo .ra { grid-row: 1 / 3; grid-column: 2; } }
 
   /* trajectory (inside About) */
   .subhead { margin: 110px 0 32px; max-width: 680px; }
@@ -402,7 +415,7 @@
     <div class="wrap">
       <div class="head reveal">
         <div class="kicker">04 · Papers</div>
-        <h2>Publications <em>&amp; manuscripts.</em></h2>
+        <h2>Papers <em>&amp; code.</em></h2>
         <p>* co-first author</p>
       </div>
       <div class="pubs reveal">
@@ -421,6 +434,19 @@
           <div><p class="t">DiagNexus: An Interpretable CNN-Based CAD System for Early Alzheimer's Diagnosis and Genetic Risk Analysis</p>
           <p class="a"><strong>Elbehairy, S. S.*</strong>, Eldreeny, A. F.*, Ashmawy, T. Kh.*, ElSheik, Z., &amp; Badr, E.</p></div>
         </div>
+      </div>
+
+      <div class="code reveal">
+        <h3>Code <em>&amp; other projects.</em></h3>
+        <a class="repo" href="https://github.com/Suhaila-Samir-El-behairy/MoChAP-Modification-of-ChIP-Analysis-Pipeline">
+          <span class="rn">MoChAP</span><span class="rd">Deep learning for ChIP-seq peak calling and motif discovery · Best Project Award, Computational Biology Day</span><span class="ra">↗</span></a>
+        <a class="repo" href="https://github.com/Suhaila-Samir-El-behairy/MRI-Alzheimers-CNN">
+          <span class="rn">MRI-Alzheimers-CNN</span><span class="rd">CNN classification of Alzheimer's disease from structural MRI</span><span class="ra">↗</span></a>
+        <a class="repo" href="https://github.com/Suhaila-Samir-El-behairy/Mapping-the-Single-Cell-RNA-Seq-Trajectory-Landscape-Crosstalk-in-Liver-Cancer">
+          <span class="rn">Liver cancer scRNA-seq</span><span class="rd">Mapping the single-cell trajectory landscape and cell–cell crosstalk in liver cancer</span><span class="ra">↗</span></a>
+        <a class="repo" href="https://github.com/Suhaila-Samir-El-behairy/Motif-Discovery-Beyond-Substrings-MoDisST">
+          <span class="rn">MoDisST</span><span class="rd">Motif discovery beyond substrings</span><span class="ra">↗</span></a>
+        <a class="more" href="https://github.com/Suhaila-Samir-El-behairy">All repositories on GitHub ↗</a>
       </div>
     </div>
   </section>
