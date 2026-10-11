@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Suhaila Elbehairy</title>
-<meta name="description" content="Suhaila Elbehairy — computational biologist working on single-cell genomics and interpretable machine learning for high-dimensional biological data.">
+<meta name="description" content="Suhaila Elbehairy — computational biologist studying how high-dimensional data, from medical images to single-cell transcriptomes, can explain disease mechanisms rather than only predict disease.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Ccircle cx='7' cy='9' r='3.6' fill='%23fc66ff'/%3E%3Ccircle cx='14' cy='5.6' r='2.5' fill='%23b22f8c'/%3E%3Ccircle cx='12.6' cy='15' r='3.2' fill='%238a1671'/%3E%3Ccircle cx='18.4' cy='11.4' r='1.9' fill='%235f105a'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -275,7 +275,7 @@
   <div class="wrap">
     <div class="kicker">Computational biology · single-cell genomics · interpretable ML</div>
     <h1>Suhaila <em>Elbehairy.</em></h1>
-    <p class="tagline">I use single-cell genomics and interpretable machine learning to make sense of high-dimensional biology, <em>from the cells inside a tumour to the brain changes that signal Alzheimer's.</em></p>
+    <p class="tagline">I want to understand how high-dimensional data, from medical images to single-cell transcriptomes, can <em>explain disease mechanisms rather than only predict disease.</em></p>
     <div class="btns">
       <a class="btn primary" href="#research">My research ↓</a>
       <a class="btn" href="#contact">Get in touch</a>
@@ -296,7 +296,7 @@
       <div class="head reveal">
         <div class="kicker">01 · Research</div>
         <h2>Selected <em>research.</em></h2>
-        <p>Two lines of work: single-cell profiling of tumours, and interpretable machine learning for Alzheimer's disease. In both, I care about whether a finding still holds when you look harder.</p>
+        <p>Two questions drive me: can image-derived features become interpretable phenotypes that link genetic variation to changes in tissue, and which cell–cell interactions drive disease states rather than merely accompany them? Each project below brought me to the same boundary: results that are suggestive but not yet tested.</p>
       </div>
 
       <div class="story">
@@ -306,6 +306,7 @@
             <h3>Know the answer, <em>then test.</em></h3>
             <div class="inline-fig" data-fig="0"></div>
             <p>Real single-cell data has no answer key, so I made one. Using <strong>Splatter</strong>, with parameters estimated from real 10x samples, I simulated datasets of 10k to 1M cells across 12 known populations. Then I ran <strong>170 end-to-end workflows</strong> across Seurat, SingleCellExperiment and Scanpy, covering normalization, feature selection, dimensionality reduction and clustering.</p>
+            <p>The main lesson: <strong>good clustering scores do not guarantee that the true cell populations are recovered.</strong></p>
             <div class="metrics"><span>cluster purity</span><span>silhouette</span><span>RMSD</span><span>runtime</span><span>annotation</span><span>trajectory · Monocle3</span></div>
             <div class="paper">
               <div class="venue">Manuscript in preparation · co-first author</div>
@@ -320,6 +321,7 @@
             <div class="inline-fig" data-fig="1"></div>
             <p>Simulations only go so far. I validated the selected workflows on a real lung tumour/normal dataset, and profiled <strong>17 neuroblastoma samples</strong>: 16 clusters across nine cell types, including six distinct tumour subpopulations and a rare plasma cell population.</p>
             <p>Without ground truth, independent lines of evidence have to agree. I used ligand–receptor modelling (13 core pathways) to map tumour–immune crosstalk, and inferCNV to tie transcriptional states to chromosomal changes such as MYCN-associated 2p gains. Trajectory analysis pointed to convergent developmental programs rather than a single lineage.</p>
+            <p>Linking predicted ligand–receptor interactions to tumour signalling pathways left me with the question I want to answer next: <strong>which of these interactions are functionally important?</strong></p>
             <div class="paper">
               <div class="venue">Under review · Scientific Reports</div>
               <div class="t">Integrated Single-Cell Profiling Highlights Developmental Origins, Intercellular Signaling, and Genomic Programs in Neuroblastoma</div>
@@ -329,10 +331,10 @@
 
           <article class="step" data-i="2" style="--c:var(--k3)">
             <div class="count"><b>03 / 04</b><i>Interpretability</i></div>
-            <h3>Accurate, <em>but for the right reasons?</em></h3>
+            <h3>94% accurate, <em>until you split by patient.</em></h3>
             <div class="inline-fig" data-fig="2"></div>
-            <p>For my undergraduate thesis I designed a <strong>dual-branch 2D CNN</strong>, with small- and large-kernel stacks, to classify Alzheimer's disease, MCI and healthy controls from T1-weighted MRI (ADNI, 505 subjects, 1:23.7 class imbalance). It reached 94% peak accuracy and an F1 of 0.91 for MCI vs. controls.</p>
-            <p>Standard explainability tools didn't work with the dual-branch architecture, so I built <strong>EfficientMCIAnalyzer</strong>. It generates LIME heatmaps and splits predictions into four misclassification sub-classes, to check that the accuracy comes from clinically relevant regions rather than imaging artifacts.</p>
+            <p>For my undergraduate thesis I designed a <strong>dual-branch 2D CNN</strong>, with small- and large-kernel stacks, to classify Alzheimer's disease, MCI and healthy controls from T1-weighted MRI (ADNI, 505 subjects, 1:23.7 class imbalance). It reached 94% accuracy on MRI slices, but <strong>balanced accuracy fell to about 35% once I split by participant</strong>, so that slices from the same person could no longer appear in both training and test sets. That taught me how easily performance can mislead without careful validation.</p>
+            <p>It also made me ask whether explanations highlight meaningful anatomy. Standard tools didn't work with the dual-branch architecture, so I built <strong>EfficientMCIAnalyzer</strong>, which generates LIME heatmaps and splits predictions into four misclassification sub-classes to check whether the model relies on clinically relevant regions or on imaging artifacts.</p>
             <div class="paper">
               <div class="venue">Undergraduate thesis · ITIDA-funded</div>
               <div class="t">An Interpretable 2D Dual-CNN Framework for Alzheimer's Disease Detection from Structural MRI Slices</div>
@@ -344,7 +346,7 @@
             <div class="count"><b>04 / 04</b><i>Causal inference</i></div>
             <h3>From association <em>to cause.</em></h3>
             <div class="inline-fig" data-fig="3"></div>
-            <p>A heatmap shows where a model looks, not why that region matters. In <strong>DiagNexus</strong>, I benchmarked the model against VGG-16 transfer learning and used LIME and SHAP to localise discriminative regions. I then linked those regional volumes to ADNI genetic variants with LASSO regression and two-stage least-squares <strong>Mendelian randomization</strong>.</p>
+            <p>Before an imaging phenotype can be tested against genetic variation, it has to be defined. In <strong>DiagNexus</strong>, I benchmarked the model against VGG-16 transfer learning and used LIME and SHAP to localise discriminative regions. I then linked those regional volumes to ADNI genetic variants with LASSO regression and two-stage least-squares <strong>Mendelian randomization</strong>.</p>
             <div class="paper">
               <div class="venue">Manuscript in preparation · co-first author</div>
               <div class="t">DiagNexus: An Interpretable CNN-Based CAD System for Early Alzheimer's Diagnosis and Genetic Risk Analysis</div>
@@ -494,13 +496,13 @@ const TRAJECTORY = [
     note: "DRAFT: Learning PyTorch from the internals up, and co-building an NLP tool to cluster and review biological literature." },
   { id: "bsc", kind: "main", x: 350, y: 150, when: "2025", label: "B.Sc.",
     title: "B.Sc., Magna Cum Laude", where: "cGPA 3.76 · Provost's Honor Roll · ITAC-funded thesis (1 of 189 nationwide) · Best Project Award 2024 & 2025",
-    note: "DRAFT: My thesis showed me that a high accuracy is the start of the question, not the answer." },
+    note: "My thesis taught me how easily performance can mislead without careful validation." },
   { id: "nust", kind: "side", from: 412, x: 472, y: 52, when: "Jul–Aug 2025", label: "NUST internship",
     title: "Research intern", where: "BIOMISA Lab, SINES, NUST, Islamabad · with Dr. Muhammad Usman Akram",
     note: "DRAFT: Working on a multimodal neuro-diagnostic system showed me how much depends on how modalities are integrated." },
   { id: "pra", kind: "main", x: 500, y: 150, when: "2025 →", label: "Post-bac RA",
     title: "Post-baccalaureate research assistant", where: "BCBU, Zewail City · with Dr. Eman Badr",
-    note: "DRAFT: Benchmarking 170 workflows showed me how much a single analysis choice can change the biology you end up seeing." },
+    note: "Benchmarking 170 single-cell RNA-seq workflows showed me that good clustering scores do not guarantee that true cell populations are recovered." },
   { id: "cha", kind: "side", from: 562, x: 612, y: 250, when: "Nov–Dec 2025", label: "Charité course",
     title: "Next Generation Models for Cardiovascular Disease", where: "Charité Berlin, Amsterdam UMC & Magdi Yacoub Heart Foundation",
     note: "DRAFT: Choosing a model is a scientific and ethical decision, not only a performance one." },
@@ -511,8 +513,8 @@ const TRAJECTORY = [
     title: "Agentic AI Developer Diploma", where: "National Telecommunication Institute (NTI) · in progress",
     note: "DRAFT: Engineering training in LLM-based tools; a useful skill alongside my research, not its focus." },
   { id: "phd", kind: "future", x: 780, y: 150, when: "next", label: "PhD",
-    title: "PhD in computational biology", where: "Single-cell genomics · multimodal data · interpretable ML",
-    note: "Characterising rare cell types, integrating data across modalities, and building models that work at the level of the patient." }
+    title: "PhD", where: "Imaging genetics · cell–cell communication · working with experimental scientists",
+    note: "Build analyses robust enough to turn suggestive computational results into hypotheses that can be tested, and deepen my understanding of molecular biology and genetics." }
 ];
 const DEFAULT_NODE = "pra";
 // Notes starting with "DRAFT:" stay hidden on the live site. Rewrite them in your own words
