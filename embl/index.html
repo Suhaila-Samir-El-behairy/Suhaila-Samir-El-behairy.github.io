@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Frozen snapshot submitted with the EMBL International PhD Programme application, 12 Oct 2026. Do not edit; update the main index.html instead. -->
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://suhaila-samir-el-behairy.github.io/">
+<title>Suhaila Elbehairy</title>
+<meta name="description" content="Suhaila Elbehairy — computational biologist studying how high-dimensional data, from medical images to single-cell transcriptomes, can explain disease mechanisms rather than only predict disease.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Ccircle cx='7' cy='9' r='3.6' fill='%23fc66ff'/%3E%3Ccircle cx='14' cy='5.6' r='2.5' fill='%23b22f8c'/%3E%3Ccircle cx='12.6' cy='15' r='3.2' fill='%238a1671'/%3E%3Ccircle cx='18.4' cy='11.4' r='1.9' fill='%235f105a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* palette: #fc66ff  #b22f8c  #8a1671  #5f105a  #390a3c  #170417 */
+    color-scheme: light;
+    --bg: #fbf6fa; --panel: #ffffff; --panel2: #f5ecf3;
+    --text: #170417; --muted: #6e5470; --faint: #c9b3c7; --line: #ecdcea;
+    --accent: #b22f8c;
+    --k1: #d63fda; --k2: #b22f8c; --k3: #8a1671; --k4: #5f105a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.65 "Inter Tight", system-ui, sans-serif; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  em { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; }
+  .draft { background: color-mix(in srgb, var(--accent) 22%, transparent); padding: 0 4px; border-radius: 4px; }
+  .kicker { font: 500 .72rem "JetBrains Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- nav ---------- */
+  .nav { position: fixed; inset: 0 0 auto; z-index: 40; transition: background .3s, border-color .3s; border-bottom: 1px solid transparent; }
+  .nav.solid { background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(10px); border-color: var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .mark { font-weight: 600; font-size: 1rem; text-decoration: none; letter-spacing: -.01em; }
+  .mark { display: inline-flex; align-items: center; gap: 10px; }
+  .mark .logo { width: 22px; height: 22px; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .mark:hover .logo { transform: rotate(-18deg) scale(1.08); }
+  .mark .nm { white-space: nowrap; }
+  .mark .rest { display: inline-block; max-width: 0; opacity: 0; overflow: hidden; vertical-align: bottom; transition: max-width .55s cubic-bezier(.2,.8,.2,1), opacity .35s; }
+  .mark .dot { display: inline-block; max-width: 1em; overflow: hidden; vertical-align: bottom; color: var(--accent); transition: max-width .3s, opacity .3s; }
+  #mark.full .rest, #mark:hover .rest, #mark:focus-visible .rest { max-width: 5.5em; opacity: 1; }
+  #mark.full .dot, #mark:hover .dot, #mark:focus-visible .dot { max-width: 0; opacity: 0; }
+  #mark.full .logo { transform: rotate(-18deg); }
+  .nav ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; align-items: center; font-size: .9rem; }
+  .nav ul a { text-decoration: none; color: var(--muted); transition: color .2s; }
+  .nav ul a:hover, .nav ul a.cur { color: var(--text); }
+  .nav .cv { border: 1px solid var(--line); padding: 5px 12px; border-radius: 99px; color: var(--text); }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+  #field { position: absolute; top: 0; right: 0; width: 62%; height: 100%; -webkit-mask-image: radial-gradient(ellipse 75% 68% at 62% 48%, #000 45%, transparent 82%); mask-image: radial-gradient(ellipse 75% 68% at 62% 48%, #000 45%, transparent 82%); }
+  #field .noise circle { fill: var(--faint); opacity: .7; }
+  #field .cl { cursor: pointer; outline: none; transition: opacity .4s; }
+  #field .hit { fill: transparent; }
+  #field .pts { fill: var(--col); opacity: .78; transform-box: fill-box; transform-origin: center; transition: transform .6s cubic-bezier(.2,.8,.2,1), opacity .4s; }
+  #field .drift { animation: drift var(--dur) ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate(var(--dx), var(--dy)); } }
+  #field .lab { font: 10.5px "JetBrains Mono", monospace; fill: var(--col); opacity: .7; letter-spacing: .04em; transition: opacity .3s; pointer-events: none; }
+  #field .ring { fill: none; stroke: var(--col); stroke-width: 1.2; opacity: 0; transform-box: fill-box; transform-origin: center; pointer-events: none; }
+  #field.touring .cl:not(.tour) .pts { opacity: .45; }
+  #field .cl.tour .pts { transform: scale(1.08); opacity: 1; }
+  #field .cl.tour .lab { opacity: 1; }
+  #field .cl.tour .ring { animation: ripple 1.5s ease-out; }
+  @keyframes ripple { 0% { opacity: .55; transform: scale(.7); } 100% { opacity: 0; transform: scale(1.35); } }
+  #field.hovering .cl:not(.on) { opacity: .28; }
+  #field .cl.on .pts { transform: scale(1.1); opacity: 1; }
+  #field .cl.on .lab, #field .cl:focus-visible .lab { opacity: 1; text-decoration: underline; }
+  #field .cl.press .pts { animation: press .45s ease; }
+  @keyframes press { 40% { transform: scale(.88); } 100% { transform: scale(1.1); } }
+  .hero .wrap { pointer-events: none; }
+  .hero .wrap > * { pointer-events: auto; width: fit-content; max-width: 100%; }
+  .hero .wrap { position: relative; width: 100%; padding-top: 80px; padding-bottom: 120px; }
+  .hero h1 { white-space: nowrap; font-weight: 700; font-size: clamp(2.1rem, 5.6vw, 4.6rem); line-height: .95; letter-spacing: -.04em; margin: 18px 0 26px; }
+  .hero h1 em { letter-spacing: -.02em; color: var(--accent); }
+  .hero .tagline { font-size: clamp(1.1rem, 2vw, 1.35rem); color: var(--muted); max-width: 620px; margin: 0 0 36px; line-height: 1.5; }
+  .hero .tagline em { color: var(--text); font-size: 1.12em; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 500; font-size: .95rem; padding: 12px 20px; border-radius: 99px; border: 1px solid var(--line); transition: border-color .2s, background .2s; }
+  .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn:not(.primary):hover { border-color: var(--muted); }
+  .hero .foot { position: absolute; left: 0; right: 0; bottom: 32px; }
+  .hero .foot .wrap { padding: 0 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px 22px; font: .74rem "JetBrains Mono", monospace; color: var(--muted); }
+  .tags span::before { content: "·"; margin-right: 22px; color: var(--faint); }
+  .tags span:first-child::before { display: none; }
+
+  /* ---------- sections ---------- */
+  section.block { padding: 120px 0 40px; }
+  .head { margin-bottom: 56px; max-width: 760px; }
+  .head h2 { font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.02; letter-spacing: -.035em; margin: 14px 0 18px; }
+  .head h2 em { color: var(--accent); }
+  .head p { color: var(--muted); font-size: 1.08rem; margin: 0; }
+
+  /* research scrollytelling */
+  .story { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: 64px; }
+  .step { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; padding: 40px 0; opacity: .32; transition: opacity .5s; }
+  .step.on { opacity: 1; }
+  .step:first-child { min-height: 70vh; }
+  .step .count { display: flex; gap: 14px; align-items: center; }
+  .step .count b { font: 500 .74rem "JetBrains Mono", monospace; color: var(--text); }
+  .step .count i { font-style: normal; font: .7rem "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .12em; color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); padding: 2px 9px; border-radius: 99px; }
+  .step h3 { font-weight: 700; font-size: clamp(1.9rem, 3.6vw, 2.75rem); line-height: 1.05; letter-spacing: -.03em; margin: 18px 0 18px; }
+  .step h3 em { color: var(--c); }
+  .step p { color: var(--muted); margin: 0 0 14px; }
+  .step p strong { color: var(--text); font-weight: 500; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 22px; }
+  .metrics span { font: .72rem "JetBrains Mono", monospace; color: var(--muted); background: var(--panel2); padding: 3px 9px; border-radius: 6px; }
+  .paper { border: 1px solid var(--line); border-left: 2px solid var(--c); border-radius: 4px 12px 12px 4px; padding: 18px 20px; background: var(--panel); }
+  .paper .venue { font: .7rem "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--c); }
+  .paper .t { font-weight: 600; font-size: 1.02rem; line-height: 1.35; margin: 6px 0 6px; color: var(--text); }
+  .paper .d { font-size: .9rem; color: var(--muted); margin: 0; }
+  .inline-fig { display: none; }
+
+  .stage { position: sticky; top: 96px; height: calc(100vh - 140px); max-height: 640px; display: flex; flex-direction: column; }
+  .ladder { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px; }
+  .ladder div { font: .68rem "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); border-top: 2px solid var(--line); padding-top: 8px; transition: color .4s, border-color .4s; }
+  .ladder div.on { color: var(--text); border-color: var(--c); }
+  .ladder div.done { color: var(--muted); border-color: color-mix(in srgb, var(--c) 40%, var(--line)); }
+  .canvas { position: relative; flex: 1; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); overflow: hidden; }
+  .canvas .fig { position: absolute; inset: 0; opacity: 0; transition: opacity .6s ease; display: flex; align-items: center; justify-content: center; padding: 22px; }
+  .canvas .fig.on { opacity: 1; }
+  .fig svg { width: 100%; height: 100%; max-height: 100%; }
+  .fig text { font-family: "JetBrains Mono", monospace; }
+
+  /* about */
+  .about { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 64px; align-items: start; }
+  .about .body p { font-size: 1.12rem; margin: 0 0 18px; }
+  .about .body p:first-child { font-size: 1.3rem; line-height: 1.5; }
+  .facts { display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .fact { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+  .fact .k { font: .7rem "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding-top: 3px; }
+  .fact .v > span { display: block; color: var(--muted); font-size: .88rem; }
+
+  /* toolkit: dot plot */
+  .dotplot { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 14px; overflow-x: auto; }
+  .dp { border-collapse: collapse; font: .8rem "JetBrains Mono", monospace; min-width: 560px; width: 100%; }
+  .dp th { font-weight: 500; padding: 6px 8px 12px; text-align: center; font-size: .72rem; letter-spacing: .04em; vertical-align: bottom; }
+  .dp thead th + th { width: 20%; }
+  .dp th span { display: block; color: var(--muted); font-weight: 400; font-size: .66rem; margin-top: 2px; }
+  .dp th.row { vertical-align: middle; width: 1%; text-align: right; color: var(--text); white-space: nowrap; font-weight: 400; font-size: .8rem; padding: 0 16px 0 0; }
+  .dp tr.grp th { text-align: left; color: var(--muted); font-size: .66rem; text-transform: uppercase; letter-spacing: .12em; padding: 16px 0 6px; font-weight: 400; }
+  .dp td { text-align: center; padding: 4px 8px; height: 32px; border-left: 1px dashed var(--line); }
+  .dp tbody tr:not(.grp):hover th.row { color: var(--accent); }
+  .dp tbody tr:not(.grp):hover td { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+  .dp .d { display: inline-block; border-radius: 50%; background: var(--c); vertical-align: middle; transition: transform .2s; }
+  .dp td:hover .d { transform: scale(1.3); }
+  .dp-legend { display: flex; gap: 16px; align-items: center; color: var(--muted); font: .7rem "JetBrains Mono", monospace; margin-top: 12px; flex-wrap: wrap; }
+  .dp-legend .d { display: inline-block; border-radius: 50%; background: var(--muted); vertical-align: middle; margin-right: 4px; }
+  .also { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-top: 16px; font-size: .92rem; color: var(--muted); }
+  .also .k { font: .68rem "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .12em; width: 150px; }
+  .also .sep { color: var(--faint); }
+  .pill { font: .76rem "JetBrains Mono", monospace; padding: 3px 10px; border-radius: 99px; border: 1px dashed var(--accent); color: var(--accent); }
+
+  /* publications */
+  .pubs { border-top: 1px solid var(--line); }
+  .pub { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+  .pub .st { font: .72rem "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding-top: 4px; }
+  .pub .st b { display: block; color: var(--accent); font-weight: 500; }
+  .pub .t { font-weight: 600; font-size: 1.12rem; line-height: 1.35; margin: 0 0 6px; }
+  .pub .a { color: var(--muted); font-size: .92rem; margin: 0; }
+  .pub .a strong { color: var(--text); font-weight: 500; }
+  .code { margin-top: 72px; }
+  .code h3 { font-weight: 700; font-size: 1.5rem; letter-spacing: -.02em; margin: 0 0 18px; }
+  .code h3 em { color: var(--accent); }
+  .repo { display: grid; grid-template-columns: 220px 1fr auto; gap: 20px; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--line); text-decoration: none; transition: padding-left .25s; }
+  .repo:last-of-type { border-bottom: 1px solid var(--line); }
+  .repo:hover { padding-left: 8px; }
+  .repo:hover .rn, .repo:hover .ra { color: var(--accent); }
+  .repo .rn { font: 500 .88rem "JetBrains Mono", monospace; }
+  .repo .rd { color: var(--muted); font-size: .95rem; }
+  .repo .ra { color: var(--muted); }
+  .code .more { display: inline-block; margin-top: 16px; font: .8rem "JetBrains Mono", monospace; color: var(--muted); text-decoration: none; }
+  .code .more:hover { color: var(--accent); }
+  @media (max-width: 900px) { .repo { grid-template-columns: 1fr auto; gap: 4px 12px; } .repo .rd { grid-column: 1; grid-row: 2; } .repo .ra { grid-row: 1 / 3; grid-column: 2; } }
+
+  /* trajectory (inside About) */
+  .subhead { margin: 110px 0 32px; max-width: 680px; }
+  .subhead h3 { font-weight: 700; font-size: clamp(1.7rem, 3.4vw, 2.4rem); letter-spacing: -.03em; line-height: 1.05; margin: 0 0 12px; }
+  .subhead h3 em { color: var(--accent); }
+  .subhead p { color: var(--muted); margin: 0; }
+  .traj-grid { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  .tree-wrap { border: 1px solid var(--line); border-radius: 18px; background: var(--panel); padding: 14px; overflow-x: auto; }
+  .tree-wrap svg { width: 100%; min-width: 680px; height: auto; display: block; }
+  .tree .edge { fill: none; stroke: var(--faint); stroke-width: 1.5; }
+  .tree .edge.main { stroke: var(--accent); stroke-width: 2.5; }
+  .tree .edge.future { stroke: var(--k4); stroke-width: 2; stroke-dasharray: 5 6; }
+  .tree .draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
+  .tree.go .draw { transition: stroke-dashoffset .9s ease; stroke-dashoffset: 0; }
+  .tree .node { cursor: pointer; outline: none; }
+  .tree .node circle.dot { fill: var(--panel); stroke: var(--col); stroke-width: 2.5; transition: fill .2s; }
+  .tree .node.side circle.dot { stroke-width: 2; }
+  .tree .node.future circle.dot { stroke-dasharray: 3 3; }
+  .tree .node:hover circle.dot, .tree .node:focus-visible circle.dot { fill: color-mix(in srgb, var(--col) 35%, var(--panel)); }
+  .tree .node.sel circle.dot { fill: var(--col); }
+  .tree .node .halo { fill: none; stroke: var(--col); opacity: 0; transition: opacity .2s; }
+  .tree .node.sel .halo { opacity: .3; }
+  .tree .node text { fill: var(--text); font: 500 12.5px "Inter Tight", sans-serif; }
+  .tree .node.side text { fill: var(--muted); font-weight: 400; }
+  .tree .node text.when { fill: var(--muted); font: 10.5px "JetBrains Mono", monospace; }
+  .tree .cap { stroke: var(--faint); stroke-width: 1.5; }
+  .detail { border: 1px solid var(--line); border-radius: 18px; padding: 24px 24px 20px; background: var(--panel); min-height: 200px; position: relative; }
+  .detail::before { content: ""; position: absolute; left: 0; top: 22px; bottom: 22px; width: 2px; background: var(--col, var(--accent)); }
+  .detail .when { font: .72rem "JetBrains Mono", monospace; color: var(--col, var(--accent)); letter-spacing: .06em; }
+  .detail h3 { font-weight: 700; font-size: 1.4rem; letter-spacing: -.02em; margin: 6px 0 2px; line-height: 1.2; }
+  .detail .where { color: var(--muted); font-size: .9rem; margin-bottom: 18px; }
+  .detail .k { font: .68rem "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); display: block; margin-bottom: 6px; }
+  .detail .note { font-family: "Instrument Serif", Georgia, serif; font-size: 1.3rem; line-height: 1.4; margin: 0; }
+  .detail .navb { display: flex; justify-content: space-between; margin-top: 22px; }
+  .detail .navb button { background: none; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); font: .72rem "JetBrains Mono", monospace; padding: 5px 12px; cursor: pointer; }
+  .detail .navb button:hover { color: var(--text); border-color: var(--muted); }
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 12px; color: var(--muted); font: .7rem "JetBrains Mono", monospace; }
+  .legend i { display: inline-block; width: 22px; border-top: 2px solid; vertical-align: middle; margin-right: 6px; }
+
+  /* contact */
+  .contact { text-align: center; padding: 150px 0 120px; }
+  .contact h2 { font-weight: 700; font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: .98; letter-spacing: -.04em; margin: 16px 0 34px; }
+  .contact h2 em { color: var(--accent); }
+  .contact .icons { display: flex; justify-content: center; gap: 18px; margin-top: 6px; }
+  .contact .ico { display: flex; flex-direction: column; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .contact .ico svg { width: 58px; height: 58px; padding: 17px; border: 1px solid var(--line); border-radius: 50%; background: var(--panel); transition: color .2s, border-color .2s, transform .25s, background .2s; }
+  .contact .ico span { font: .7rem "JetBrains Mono", monospace; color: var(--muted); letter-spacing: .04em; }
+  .contact .ico:hover svg { color: #fff; background: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
+  .contact .ico:hover span { color: var(--accent); }
+  .contact .copy { display: block; margin: 26px auto 0; background: none; border: 0; color: var(--muted); font: .76rem "JetBrains Mono", monospace; cursor: pointer; }
+  .contact .copy:hover { color: var(--accent); }
+
+  footer { border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 28px; padding-bottom: 36px; font-size: .88rem; color: var(--muted); }
+  footer nav { display: flex; gap: 22px; }
+  footer nav a { text-decoration: none; }
+  footer nav a:hover { color: var(--text); }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s, transform .8s; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .nav ul li.hide-m { display: none; }
+    .story { grid-template-columns: 1fr; gap: 0; }
+    .stage { display: none; }
+    .step, .step:first-child { min-height: 0; opacity: 1; padding: 36px 0; border-top: 1px solid var(--line); }
+    .inline-fig { display: block; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 14px; margin: 0 0 22px; aspect-ratio: 6 / 5; }
+    .inline-fig svg { width: 100%; height: 100%; }
+    .about { grid-template-columns: 1fr; gap: 36px; }
+    .kit { grid-template-columns: 1fr 1fr; }
+    .pub { grid-template-columns: 1fr; gap: 6px; }
+    .traj-grid { grid-template-columns: 1fr; }
+    #field { width: 100%; opacity: .3; pointer-events: none; }
+    #field .lab, #field .ring { display: none; }
+  }
+  @media (max-width: 560px) {
+    .nav ul { gap: 16px; }
+    .kit { grid-template-columns: 1fr; }
+    .tags span::before { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal, .step { opacity: 1; transform: none; transition: none; }
+    .tree .draw { stroke-dashoffset: 0; }
+    .canvas .fig { transition: none; }
+    #field .drift, #field .cl.press .pts, #field .cl.tour .ring { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =================== NAV =================== -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="mark" id="mark" aria-label="Suhaila Elbehairy, back to top"><svg class="logo" viewBox="0 0 22 22" aria-hidden="true"><circle cx="7" cy="9" r="3.6" style="fill:var(--k1)"/><circle cx="14" cy="5.6" r="2.5" style="fill:var(--k2)"/><circle cx="12.6" cy="15" r="3.2" style="fill:var(--k3)"/><circle cx="18.4" cy="11.4" r="1.9" style="fill:var(--k4)"/></svg><span class="nm">Suhaila E<span class="rest">lbehairy</span><span class="dot">.</span></span></a>
+    <ul>
+      <li class="hide-m"><a href="#research">Research</a></li>
+      <li class="hide-m"><a href="#path">Trajectory</a></li>
+      <li class="hide-m"><a href="#papers">Papers</a></li>
+      <!-- CV button: add back once a public cv.pdf (without phone number) is in the repo -->
+      <!-- <li><a href="cv.pdf" class="cv">CV ↗</a></li> -->
+    </ul>
+  </div>
+</header>
+
+<!-- =================== HERO =================== -->
+<div class="hero" id="top">
+  <svg id="field" aria-hidden="true"></svg>
+  <div class="wrap">
+    <div class="kicker">Computational biology · single-cell genomics · interpretable ML</div>
+    <h1>Suhaila <em>Elbehairy.</em></h1>
+    <p class="tagline">I want to understand how high-dimensional data, from medical images to single-cell transcriptomes, can <em>explain disease mechanisms rather than only predict disease.</em></p>
+    <div class="btns">
+      <a class="btn primary" href="#research">My research ↓</a>
+      <a class="btn" href="#contact">Get in touch</a>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="wrap">
+      <div class="tags"><span>Post-bac RA · BCBU, Zewail City</span><span>B.Sc. Magna Cum Laude</span><span>Applying to PhD programs</span><span>Giza, Egypt</span></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- =================== RESEARCH =================== -->
+  <section class="block" id="research">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="kicker">01 · Research</div>
+        <h2>Selected <em>research.</em></h2>
+        <p>Two questions drive me: can image-derived features become interpretable phenotypes that link genetic variation to changes in tissue, and which cell–cell interactions drive disease states rather than merely accompany them? Each project below brought me to the same boundary: results that are suggestive but not yet tested.</p>
+      </div>
+
+      <div class="story">
+        <div class="steps">
+          <article class="step" data-i="0" style="--c:var(--k1)">
+            <div class="count"><b>01 / 04</b><i>Simulated truth</i></div>
+            <h3>Know the answer, <em>then test.</em></h3>
+            <div class="inline-fig" data-fig="0"></div>
+            <p>Real single-cell data has no answer key, so we made one. Using <strong>Splatter</strong>, with parameters estimated from real 10x samples, we simulated datasets of 10k to 1M cells across 12 known populations. Then we ran <strong>170 end-to-end workflows</strong> across Seurat, SingleCellExperiment and Scanpy, covering normalization, feature selection, dimensionality reduction and clustering. We then validated the selected workflows on a <strong>real lung tumour/normal dataset</strong>, where no ground-truth labels exist.</p>
+            <p>The main lesson: <strong>good clustering scores do not guarantee that the true cell populations are recovered.</strong></p>
+            <div class="metrics"><span>cluster purity</span><span>silhouette</span><span>RMSD</span><span>runtime</span><span>annotation</span><span>trajectory · Monocle3</span></div>
+            <div class="paper">
+              <div class="venue">Manuscript in preparation · co-first author</div>
+              <div class="t">Robustness Benchmarking of scRNA-seq Pipelines for Tumor Microenvironment Profiling</div>
+              <p class="d">Which workflow choices hold up, and which quietly change the biology you end up seeing.</p>
+            </div>
+          </article>
+
+          <article class="step" data-i="1" style="--c:var(--k2)">
+            <div class="count"><b>02 / 04</b><i>Real tumours</i></div>
+            <h3>When the labels <em>run out.</em></h3>
+            <div class="inline-fig" data-fig="1"></div>
+            <p>We profiled <strong>17 neuroblastoma samples</strong>, resolving 16 clusters across nine cell types, including six distinct tumour subpopulations and a rare plasma cell population.</p>
+            <p>Without ground truth, independent lines of evidence have to agree. We used ligand–receptor modelling (13 core pathways) to map tumour–immune crosstalk, and inferCNV to tie transcriptional states to chromosomal changes such as MYCN-associated 2p gains. Trajectory analysis pointed to convergent developmental programs rather than a single lineage.</p>
+            <p>Linking predicted ligand–receptor interactions to tumour signalling pathways left me with the question I want to answer next: <strong>which of these interactions are functionally important?</strong></p>
+            <div class="paper">
+              <div class="venue">Under review · Scientific Reports · second author</div>
+              <div class="t">Integrated Single-Cell Profiling Highlights Developmental Origins, Intercellular Signaling, and Genomic Programs in Neuroblastoma</div>
+              <p class="d">Tumour subpopulations, cell–cell signalling and copy-number programs in neuroblastoma.</p>
+            </div>
+          </article>
+
+          <article class="step" data-i="2" style="--c:var(--k3)">
+            <div class="count"><b>03 / 04</b><i>Interpretability</i></div>
+            <h3>94% accurate, <em>until you split by patient.</em></h3>
+            <div class="inline-fig" data-fig="2"></div>
+            <p>For our undergraduate thesis we designed a <strong>dual-branch 2D CNN</strong>, with small- and large-kernel stacks, to classify Alzheimer's disease, MCI and healthy controls from T1-weighted MRI (ADNI, 505 subjects, 1:23.7 class imbalance). It reached 94% accuracy on MRI slices. In my postgraduate work, I re-evaluated it with a participant-level split, so that slices from the same person could no longer appear in both training and test sets, and <strong>balanced accuracy fell to 60–75%</strong>. That taught me how easily performance can mislead without careful validation.</p>
+            <p>It also made me ask whether explanations highlight meaningful anatomy. Standard tools didn't work with the dual-branch architecture, so we built <strong>EfficientMCIAnalyzer</strong>, which generates LIME heatmaps and splits predictions into four misclassification sub-classes to check whether the model relies on clinically relevant regions or on imaging artifacts.</p>
+            <div class="paper">
+              <div class="venue">Undergraduate thesis · ITIDA-funded</div>
+              <div class="t">An Interpretable 2D Dual-CNN Framework for Alzheimer's Disease Detection from Structural MRI Slices</div>
+              <p class="d">Supervised by Dr. Eman Badr. One of 189 projects funded nationwide by the ITAC program.</p>
+            </div>
+          </article>
+
+          <article class="step" data-i="3" style="--c:var(--k4)">
+            <div class="count"><b>04 / 04</b><i>Causal inference</i></div>
+            <h3>From association <em>to cause.</em></h3>
+            <div class="inline-fig" data-fig="3"></div>
+            <p>Before an imaging phenotype can be tested against genetic variation, it has to be defined. In <strong>DiagNexus</strong>, we benchmarked the model against VGG-16 transfer learning and used LIME and SHAP to localise discriminative regions. We then linked those regional volumes to ADNI genetic variants with LASSO regression and two-stage least-squares <strong>Mendelian randomization</strong>.</p>
+            <div class="paper">
+              <div class="venue">Manuscript in preparation · co-first author</div>
+              <div class="t">DiagNexus: An Interpretable CNN-Based CAD System for Early Alzheimer's Diagnosis and Genetic Risk Analysis</div>
+              <p class="d">Extends the thesis model from prediction towards genetic risk.</p>
+            </div>
+          </article>
+        </div>
+
+        <aside class="stage" aria-hidden="true">
+          <div class="ladder" id="ladder">
+            <div style="--c:var(--k1)">simulated</div>
+            <div style="--c:var(--k2)">real</div>
+            <div style="--c:var(--k3)">explained</div>
+            <div style="--c:var(--k4)">causal</div>
+          </div>
+          <div class="canvas" id="canvas"></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== TRAJECTORY =================== -->
+  <section class="block" id="path">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="kicker">02 · Trajectory</div>
+        <h2>How I <em>got here.</em></h2>
+        <p>Pseudotime, roughly: the main path and the side branches that shaped it. Click a point for details.</p>
+      </div>
+      <div class="traj-grid reveal">
+        <div>
+          <div class="tree-wrap"><svg class="tree" id="tree" viewBox="0 0 830 320" role="group" aria-label="Career trajectory"></svg></div>
+          <div class="legend">
+            <span><i style="border-color:var(--accent)"></i>main path</span>
+            <span><i style="border-color:var(--faint)"></i>side branch</span>
+            <span><i style="border-color:var(--k4);border-top-style:dashed"></i>next</span>
+          </div>
+        </div>
+        <div class="detail" id="detail" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== TOOLKIT =================== -->
+  <section class="block" id="toolkit">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="kicker">03 · Toolkit</div>
+        <h2>What I <em>work with.</em></h2>
+        <p>As a dot plot, naturally: tools × projects.</p>
+      </div>
+      <div class="reveal">
+        <div class="dotplot"><table class="dp" id="dp"></table>
+          <div class="dp-legend"><span>usage</span>
+            <span><i class="d" style="width:7px;height:7px"></i>touched</span>
+            <span><i class="d" style="width:13px;height:13px"></i>regular</span>
+            <span><i class="d" style="width:19px;height:19px"></i>core</span>
+          </div>
+        </div>
+        <div class="also"><span class="k">currently learning</span><span id="learning"></span></div>
+        <div class="also"><span class="k">also</span><span>C++ · MATLAB · SQL · Bash · pytest</span><span class="sep">/</span><span>wet lab: cell culture, PCR &amp; qRT-PCR, cloning, Western blot, ELISA, fluorescence microscopy</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== PAPERS =================== -->
+  <section class="block" id="papers">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="kicker">04 · Papers</div>
+        <h2>Papers <em>&amp; code.</em></h2>
+        <p>* co-first author</p>
+      </div>
+      <div class="pubs reveal">
+        <div class="pub">
+          <div class="st"><b>Under review</b>Scientific Reports<br>Second author</div>
+          <div><p class="t">Integrated Single-Cell Profiling Highlights Developmental Origins, Intercellular Signaling, and Genomic Programs in Neuroblastoma</p>
+          <p class="a">Ragab, S. B., <strong>Elbehairy, S. S.</strong>, Afifi, A. M., Mohamed, A., Adel, E., Abbas, R., &amp; Badr, E.</p></div>
+        </div>
+        <div class="pub">
+          <div class="st"><b>In preparation</b>Submission Oct 2026</div>
+          <div><p class="t">Robustness Benchmarking of scRNA-seq Pipelines for Tumor Microenvironment Profiling</p>
+          <p class="a"><strong>Elbehairy, S. S.*</strong>, Ragab, S. B.*, Afifi, A. M., Mohamed, A., Adel, E., Abbas, R., &amp; Badr, E.</p></div>
+        </div>
+        <div class="pub">
+          <div class="st"><b>In preparation</b></div>
+          <div><p class="t">DiagNexus: An Interpretable CNN-Based CAD System for Early Alzheimer's Diagnosis and Genetic Risk Analysis</p>
+          <p class="a"><strong>Elbehairy, S. S.*</strong>, Eldreeny, A. F.*, Ashmawy, T. Kh.*, ElSheik, Z., &amp; Badr, E.</p></div>
+        </div>
+      </div>
+
+      <div class="code reveal">
+        <h3>Code <em>&amp; other projects.</em></h3>
+        <a class="repo" href="https://github.com/Suhaila-Samir-El-behairy/MoChAP-Modification-of-ChIP-Analysis-Pipeline">
+          <span class="rn">MoChAP</span><span class="rd">Deep learning for ChIP-seq peak calling and motif discovery · Top-3 course project; poster at Computational Biology Day 2024</span><span class="ra">↗</span></a>
+        <a class="repo" href="https://github.com/Suhaila-Samir-El-behairy/MRI-Alzheimers-CNN">
+          <span class="rn">MRI-Alzheimers-CNN</span><span class="rd">CNN classification of Alzheimer's disease from structural MRI · Top-3 course project; poster at Computational Biology Day 2025</span><span class="ra">↗</span></a>
+        <a class="repo" href="https://github.com/Suhaila-Samir-El-behairy/Mapping-the-Single-Cell-RNA-Seq-Trajectory-Landscape-Crosstalk-in-Liver-Cancer">
+          <span class="rn">Liver cancer scRNA-seq</span><span class="rd">Mapping the single-cell trajectory landscape and cell–cell crosstalk in liver cancer</span><span class="ra">↗</span></a>
+        <a class="repo" href="https://github.com/Suhaila-Samir-El-behairy/Motif-Discovery-Beyond-Substrings-MoDisST">
+          <span class="rn">MoDisST</span><span class="rd">Motif discovery beyond substrings</span><span class="ra">↗</span></a>
+        <a class="more" href="https://github.com/Suhaila-Samir-El-behairy">All repositories on GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CONTACT =================== -->
+  <section class="contact" id="contact">
+    <div class="wrap reveal">
+      <div class="kicker">05 · Contact</div>
+      <h2>Let's talk<br><em>science.</em></h2>
+      <div class="icons">
+        <a class="ico" href="https://www.linkedin.com/in/suhaila-elbehairy-25s" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><rect x="3" y="9" width="4" height="12" rx=".5"/><circle cx="5" cy="4.6" r="2.3"/><path d="M10 9h3.8v1.8c.6-1.1 2-2.1 4-2.1 3.6 0 4.2 2.3 4.2 5.4V21h-4v-6c0-1.5 0-3.3-2-3.3s-2.3 1.6-2.3 3.2V21H10z"/></g></svg><span>LinkedIn</span></a>
+        <a class="ico" href="https://github.com/Suhaila-Samir-El-behairy" aria-label="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>GitHub</span></a>
+        <a class="ico" id="mail" href="#" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.8 6.5l8.2 6.3 8.2-6.3"/></g></svg><span>Email</span></a>
+      </div>
+      <button class="copy" id="copy"><span id="addr"></span> · copy</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="#top" class="mark"><svg class="logo" viewBox="0 0 22 22" aria-hidden="true"><circle cx="7" cy="9" r="3.6" style="fill:var(--k1)"/><circle cx="14" cy="5.6" r="2.5" style="fill:var(--k2)"/><circle cx="12.6" cy="15" r="3.2" style="fill:var(--k3)"/><circle cx="18.4" cy="11.4" r="1.9" style="fill:var(--k4)"/></svg><span>Suhaila Elbehairy</span></a>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   EDITABLE CONTENT. Notes starting with "DRAFT:" are highlighted on the
+   page until you rewrite them in your own words.
+   ===================================================================== */
+const EMAIL = "s-suhaila.ali@zewailcity.edu.eg";
+
+// Trajectory. kind: "main" sits on the trunk, "side" is a branch that ends, "future" is dashed.
+// Side nodes need `from` (the trunk x where they branch off).
+const TRAJECTORY = [
+  { id: "zc", kind: "main", x: 50, y: 150, when: "2021", label: "Zewail City",
+    title: "B.Sc. Biomedical Sciences begins", where: "Zewail City · Computational Biology & Genomics",
+    note: "DRAFT: Coursework in genomics, systems biology and biostatistics showed me how much biology is hidden in high-dimensional data." },
+  { id: "ura", kind: "main", x: 200, y: 150, when: "2023", label: "Undergrad RA",
+    title: "Undergraduate research assistant", where: "BCBU, Zewail City · with Dr. Eman Badr",
+    note: "DRAFT: Joining a computational lab is where I learned to turn messy biological data into questions I could actually answer." },
+  { id: "ta", kind: "side", from: 262, x: 322, y: 52, when: "2023–25", label: "Teaching assistant",
+    title: "Junior teaching assistant", where: "Zewail City · bioinformatics & programming labs, cell biology labs",
+    note: "DRAFT: Teaching sequence alignment and R to others made the gaps in my own understanding impossible to ignore." },
+  { id: "nma", kind: "side", from: 262, x: 322, y: 250, when: "2024", label: "Neuromatch Academy",
+    title: "Deep Learning intern", where: "Neuromatch Academy",
+    note: "DRAFT: Learning PyTorch from the internals up, and co-building an NLP tool to cluster and review biological literature." },
+  { id: "bsc", kind: "main", x: 350, y: 150, when: "2025", label: "B.Sc.",
+    title: "B.Sc., Magna Cum Laude", where: "cGPA 3.76 · Provost's Honor Roll · ITAC-funded thesis (1 of 189 nationwide) · Computational Biology Day posters 2024 & 2025",
+    note: "My thesis taught me how easily performance can mislead without careful validation." },
+  { id: "nust", kind: "side", from: 412, x: 472, y: 52, when: "Jul–Aug 2025", label: "NUST internship",
+    title: "Research intern", where: "BIOMISA Lab, SINES, NUST, Islamabad · with Dr. Muhammad Usman Akram",
+    note: "DRAFT: Working on a multimodal neuro-diagnostic system showed me how much depends on how modalities are integrated." },
+  { id: "pra", kind: "main", x: 500, y: 150, when: "2025 →", label: "Post-bac RA",
+    title: "Post-baccalaureate research assistant", where: "BCBU, Zewail City · with Dr. Eman Badr",
+    note: "Benchmarking 170 single-cell RNA-seq workflows showed me that good clustering scores do not guarantee that true cell populations are recovered." },
+  { id: "cha", kind: "side", from: 562, x: 612, y: 250, when: "Nov–Dec 2025", label: "Charité course",
+    title: "Next Generation Models for Cardiovascular Disease", where: "Charité Berlin, Amsterdam UMC & Magdi Yacoub Heart Foundation",
+    note: "DRAFT: Choosing a model is a scientific and ethical decision, not only a performance one." },
+  { id: "rev", kind: "main", x: 640, y: 150, when: "2026 →", label: "Peer reviewer",
+    title: "Invited peer reviewer", where: "Computational Biology and Chemistry (Elsevier)",
+    note: "DRAFT: Reviewing others' work sharpened what I look for in my own: sound study design and reproducible analysis." },
+  { id: "nti", kind: "side", from: 702, x: 742, y: 250, when: "2026 →", label: "NTI diploma",
+    title: "Agentic AI Developer Diploma", where: "National Telecommunication Institute (NTI) · in progress",
+    note: "DRAFT: Engineering training in LLM-based tools; a useful skill alongside my research, not its focus." },
+  { id: "phd", kind: "future", x: 780, y: 150, when: "next", label: "PhD",
+    title: "PhD", where: "Imaging genetics · cell–cell communication · working with experimental scientists",
+    note: "Build analyses robust enough to turn suggestive computational results into hypotheses that can be tested, and deepen my understanding of molecular biology and genetics." }
+];
+const DEFAULT_NODE = "pra";
+// Notes starting with "DRAFT:" stay hidden on the live site. Rewrite them in your own words
+// (and remove "DRAFT:"), or set this to true to preview them highlighted.
+const SHOW_DRAFTS = false;
+
+// Toolkit dot plot: usage per project, in the order of PROJECTS (0 none, 1 touched, 2 regular, 3 core).
+// These levels are a first guess from the CV. Adjust them to match what you actually did.
+const PROJECTS = [
+  { name: "benchmark", sub: "scRNA-seq", col: "var(--k1)" },
+  { name: "neuroblastoma", sub: "single-cell", col: "var(--k2)" },
+  { name: "thesis", sub: "AD · CNN", col: "var(--k3)" },
+  { name: "DiagNexus", sub: "AD · MR", col: "var(--k4)" }
+];
+const TOOLS = {
+  "Languages": { "Python": [3, 1, 3, 3], "R": [3, 3, 0, 2], "Git / GitHub": [2, 2, 2, 2] },
+  "Single-cell": { "Seurat": [3, 3, 0, 0], "SingleCellExperiment": [2, 0, 0, 0], "Scanpy": [2, 0, 0, 0], "Splatter": [3, 0, 0, 0], "Monocle3": [2, 0, 0, 0], "CellChat": [0, 3, 0, 0], "inferCNV": [0, 3, 0, 0] },
+  "ML & interpretability": { "PyTorch / TensorFlow": [0, 0, 3, 3], "scikit-learn": [0, 0, 2, 2], "LIME": [0, 0, 3, 3], "SHAP": [0, 0, 0, 1] }
+};
+const LEARNING = ["LangGraph · LangChain"];
+
+/* =====================================================================
+   Rendering (no need to edit below)
+   ===================================================================== */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const NS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+const rng = seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const gaussFrom = r => () => { let u = 0, v = 0; while (!u) u = r(); while (!v) v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+
+/* ---------- hero: four annotated clusters, one per research chapter ---------- */
+(() => {
+  const svg = document.getElementById("field"), r = rng(5), g = gaussFrom(r);
+  svg.setAttribute("viewBox", "0 0 600 600"); svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+  // x, y, spread-x, spread-y, rotation, share of cells, colour, label, chapter index
+  const C = [
+    { x: 285, y: 240, sx: 52, sy: 26, rot: .5,  n: .34, col: "--k1", label: "01 · simulated truth", lx: 210, ly: 172 },
+    { x: 420, y: 190, sx: 26, sy: 22, rot: 0,   n: .20, col: "--k2",    label: "02 · real tumours",    lx: 392, ly: 140 },
+    { x: 395, y: 365, sx: 46, sy: 30, rot: -.6, n: .30, col: "--k3",   label: "03 · interpretability", lx: 300, ly: 448 },
+    { x: 505, y: 300, sx: 20, sy: 16, rot: 0,   n: .16, col: "--k4", label: "04 · causal",          lx: 470, ly: 340 }
+  ];
+  const pts = C.map(() => "");
+  for (let i = 0; i < 520; i++) {
+    let u = r(), k = 0; while (k < C.length - 1 && (u -= C[k].n) > 0) k++;
+    const c = C[k], dx = g() * c.sx, dy = g() * c.sy;
+    const x = c.x + dx * Math.cos(c.rot) - dy * Math.sin(c.rot), y = c.y + dx * Math.sin(c.rot) + dy * Math.cos(c.rot);
+    pts[k] += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(1.2 + r() * 1.5).toFixed(2)}"/>`;
+  }
+  let noise = "";
+  for (let i = 0; i < 120; i++) noise += `<circle cx="${(r() * 600).toFixed(1)}" cy="${(r() * 600).toFixed(1)}" r="1"/>`;
+  svg.innerHTML = `<g class="noise">${noise}</g>` + C.map((c, k) => `
+    <g class="cl" data-k="${k}" tabindex="0" role="link" aria-label="Go to chapter ${c.label}" style="--col:var(${c.col});--dx:${(r() * 8 - 4).toFixed(1)}px;--dy:${(r() * 8 - 4).toFixed(1)}px;--dur:${(7 + r() * 5).toFixed(1)}s">
+      <ellipse class="hit" cx="${c.x}" cy="${c.y}" rx="${c.sx * 2.5 + 10}" ry="${c.sy * 2.5 + 10}" transform="rotate(${(c.rot * 57.3).toFixed(0)} ${c.x} ${c.y})"/>
+      <ellipse class="ring" cx="${c.x}" cy="${c.y}" rx="${c.sx * 2.3}" ry="${c.sy * 2.3}" transform="rotate(${(c.rot * 57.3).toFixed(0)} ${c.x} ${c.y})"/>
+      <g class="drift"><g class="pts">${pts[k]}</g></g>
+      <text class="lab" x="${c.lx}" y="${c.ly}">${c.label}</text>
+    </g>`).join("");
+
+  const groups = [...svg.querySelectorAll(".cl")];
+  // gentle "tour": clusters light up one by one (01 → 04) with a ripple, then rest; stops for good once someone interacts
+  let touring = !reduce && matchMedia("(hover: hover)").matches, tourTimer = null;
+  const stopTour = () => { touring = false; clearTimeout(tourTimer); svg.classList.remove("touring"); groups.forEach(g => g.classList.remove("tour")); };
+  const tour = (k = 0) => {
+    if (!touring) return;
+    if (k === groups.length) { svg.classList.remove("touring"); groups.forEach(g => g.classList.remove("tour")); tourTimer = setTimeout(() => tour(0), 5000); return; }
+    svg.classList.add("touring"); groups.forEach((g, j) => g.classList.toggle("tour", j === k));
+    tourTimer = setTimeout(() => tour(k + 1), 1500);
+  };
+  if (touring) tourTimer = setTimeout(() => tour(0), 1400);
+  const focus = k => { if (k !== null) stopTour(); svg.classList.toggle("hovering", k !== null); groups.forEach((gr, j) => gr.classList.toggle("on", j === k)); };
+  const go = k => {
+    const gr = groups[k]; gr.classList.remove("press"); void gr.getBBox(); gr.classList.add("press");
+    setTimeout(() => document.querySelector(`.step[data-i="${k}"]`).scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }), reduce ? 0 : 260);
+  };
+  groups.forEach((gr, k) => {
+    gr.addEventListener("pointerenter", () => focus(k));
+    gr.addEventListener("pointerleave", () => focus(null));
+    gr.addEventListener("focus", () => focus(k));
+    gr.addEventListener("blur", () => focus(null));
+    gr.addEventListener("click", () => go(k));
+    gr.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(k); } });
+  });
+})();
+
+/* ---------- research diagrams ---------- */
+const FIGS = (() => {
+  const cols = ["var(--k1)", "var(--k2)", "var(--k3)", "var(--k4)", "var(--muted)"];
+  const blobs = [[95, 95, 22], [190, 80, 20], [275, 120, 22], [130, 195, 24], [240, 205, 20]];
+  const cells = (() => { const r = rng(21), g = gaussFrom(r), a = [];
+    for (let i = 0; i < 260; i++) { const k = Math.floor(r() * 5), [x, y, s] = blobs[k]; a.push([x + g() * s, y + g() * s * .8, k, 1.6 + r() * 1.3]); } return a; })();
+  const cap = (t, c) => `<text x="180" y="290" text-anchor="middle" style="fill:${c};font-size:11px">${t}</text>`;
+
+  const f0 = () => cells.map(([x, y, k, r]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" style="fill:${cols[k]};opacity:.85"/>`).join("") +
+    blobs.map(([x, y, s], k) => `<text x="${x}" y="${y - s * 1.9}" text-anchor="middle" style="fill:${cols[k]};font-size:10px">pop ${k + 1} ✓</text>`).join("") +
+    cap("simulated · every label known", "var(--muted)");
+
+  const f1 = () => cells.map(([x, y, , r]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" style="fill:var(--muted);opacity:.55"/>`).join("") +
+    blobs.map(([x, y, s]) => `<ellipse cx="${x}" cy="${y}" rx="${s * 2.1}" ry="${s * 1.75}" style="fill:none;stroke:var(--k2);stroke-dasharray:3 4;opacity:.8"/><text x="${x + s * 1.6}" y="${y - s * 1.4}" style="fill:var(--k2);font-size:12px">?</text>`).join("") +
+    cap("real tumour data · no answer key", "var(--muted)");
+
+  const f2 = id => {
+    let grid = ""; for (let i = 0; i <= 8; i++) { grid += `<line x1="${72 + i * 27}" y1="30" x2="${72 + i * 27}" y2="246" style="stroke:var(--line)"/>`; grid += `<line x1="72" y1="${30 + i * 27}" x2="288" y2="${30 + i * 27}" style="stroke:var(--line)"/>`; }
+    return `<defs><radialGradient id="hot${id}"><stop offset="0" style="stop-color:var(--k3);stop-opacity:.85"/><stop offset="1" style="stop-color:var(--k3);stop-opacity:0"/></radialGradient>
+      <radialGradient id="cold${id}"><stop offset="0" style="stop-color:var(--muted);stop-opacity:.7"/><stop offset="1" style="stop-color:var(--muted);stop-opacity:0"/></radialGradient></defs>
+      <rect x="72" y="30" width="216" height="216" rx="10" style="fill:var(--panel2)"/>${grid}
+      <ellipse cx="180" cy="138" rx="78" ry="92" style="fill:none;stroke:var(--muted);stroke-width:1.5"/>
+      <path d="M180 50 C 170 90, 190 120, 180 226" style="fill:none;stroke:var(--muted);opacity:.6"/>
+      <path d="M120 84 q 8 10 0 20 q -8 10 4 18 M150 64 q 6 12 -2 22 q -6 8 6 16 M140 196 q 10 -6 18 2 q 8 8 18 0 M118 140 q 12 4 10 16 q -2 12 10 18 M206 70 q -6 12 4 20 q 8 8 -2 18 M238 98 q -10 8 -4 20 q 6 10 -4 20 M214 186 q 10 -10 20 -2 q 10 6 16 -4 M232 150 q -12 2 -12 14" style="fill:none;stroke:var(--muted);opacity:.45"/>
+      <circle cx="152" cy="150" r="34" style="fill:url(#hot${id})"/>
+      <circle cx="270" cy="48" r="20" style="fill:url(#cold${id})"/>
+      <line x1="152" y1="150" x2="40" y2="200" style="stroke:var(--k3);opacity:.7"/><text x="16" y="216" style="fill:var(--k3);font-size:10px">anatomy ✓</text>
+      <line x1="270" y1="48" x2="316" y2="16" style="stroke:var(--muted);opacity:.7"/><text x="262" y="12" style="fill:var(--muted);font-size:10px">artifact ✗</text>
+      ${cap("where does the model look?", "var(--muted)")}`;
+  };
+
+  const f3 = id => {
+    const node = (x, y, w, t, c, dash) => `<rect x="${x - w / 2}" y="${y - 18}" width="${w}" height="36" rx="18" style="fill:var(--panel2);stroke:${c};${dash ? "stroke-dasharray:4 4;" : ""}"/><text x="${x}" y="${y + 4}" text-anchor="middle" style="fill:var(--text);font-size:11px">${t}</text>`;
+    return `<defs><marker id="ar${id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" style="fill:var(--k4)"/></marker>
+      <marker id="am${id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" style="fill:var(--muted)"/></marker></defs>
+      <path d="M92 182 L 132 182" style="stroke:var(--k4);stroke-width:2" marker-end="url(#ar${id})"/>
+      <path d="M228 182 L 262 182" style="stroke:var(--k4);stroke-width:2" marker-end="url(#ar${id})"/>
+      <path d="M180 92 C 180 120, 180 140, 180 160" style="stroke:var(--muted);stroke-dasharray:4 4;fill:none" marker-end="url(#am${id})"/>
+      <path d="M210 88 C 270 110, 300 140, 304 160" style="stroke:var(--muted);stroke-dasharray:4 4;fill:none" marker-end="url(#am${id})"/>
+      <path d="M150 88 C 90 110, 60 150, 58 160" style="stroke:var(--muted);stroke-dasharray:2 5;fill:none;opacity:.7"/>
+      <text x="40" y="128" style="fill:var(--muted);font-size:13px">✗</text>
+      ${node(180, 74, 120, "confounders", "var(--muted)", true)}
+      ${node(52, 182, 84, "variant", "var(--k4)")}
+      ${node(180, 182, 92, "region vol.", "var(--k4)")}
+      ${node(306, 182, 80, "diagnosis", "var(--k4)")}
+      <text x="52" y="222" text-anchor="middle" style="fill:var(--muted);font-size:9.5px">instrument</text>
+      ${cap("variants as instruments: association → cause", "var(--muted)")}`;
+  };
+  return [f0, f1, f2, f3].map(f => id => `<svg viewBox="0 0 360 300" role="img">${f(id)}</svg>`);
+})();
+
+(() => {
+  const canvas = document.getElementById("canvas"), ladder = [...document.querySelectorAll("#ladder div")];
+  canvas.innerHTML = FIGS.map((f, i) => `<div class="fig${i ? "" : " on"}">${f("s" + i)}</div>`).join("");
+  document.querySelectorAll(".inline-fig").forEach(d => d.innerHTML = FIGS[+d.dataset.fig]("m" + d.dataset.fig));
+  const figs = [...canvas.children], steps = [...document.querySelectorAll(".step")];
+  const set = i => {
+    figs.forEach((f, j) => f.classList.toggle("on", j === i));
+    ladder.forEach((l, j) => { l.classList.toggle("on", j === i); l.classList.toggle("done", j < i); });
+    steps.forEach((s, j) => s.classList.toggle("on", j === i));
+  };
+  set(0);
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && set(+e.target.dataset.i)), { rootMargin: "-45% 0px -45% 0px" });
+  steps.forEach(s => io.observe(s));
+})();
+
+/* ---------- trajectory ---------- */
+(() => {
+  const svg = document.getElementById("tree"), by = Object.fromEntries(TRAJECTORY.map(n => [n.id, n]));
+  const order = TRAJECTORY.map(n => n.id), trunk = TRAJECTORY.filter(n => n.kind !== "side");
+  const eg = el("g", {}, svg), ng = el("g", {}, svg);
+  const curve = (x1, y1, x2, y2) => { const mx = (x1 + x2) / 2; return `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`; };
+  let delay = 0;
+  const addEdge = (d, cls) => {
+    const p = el("path", { d, class: "edge " + cls }, eg);
+    if (cls !== "future") { p.style.setProperty("--len", p.getTotalLength()); p.classList.add("draw"); p.style.transitionDelay = (delay += .05) + "s"; }
+  };
+  for (let i = 1; i < trunk.length; i++) addEdge(`M${trunk[i - 1].x},${trunk[i - 1].y} L${trunk[i].x},${trunk[i].y}`, trunk[i].kind === "future" ? "future" : "main");
+  TRAJECTORY.filter(n => n.kind === "side").forEach(n => {
+    addEdge(curve(n.from, 150, n.x, n.y), "side");
+    el("line", { x1: n.x + 14, y1: n.y - 6, x2: n.x + 14, y2: n.y + 6, class: "cap" }, eg);
+  });
+
+  const detail = document.getElementById("detail");
+  const show = id => {
+    const d = by[id], i = order.indexOf(id), draft = /^DRAFT:/.test(d.note);
+    const col = d.kind === "future" ? "var(--k4)" : d.kind === "side" ? "var(--muted)" : "var(--accent)";
+    svg.querySelectorAll(".node").forEach(g => g.classList.toggle("sel", g.dataset.id === id));
+    detail.style.setProperty("--col", col);
+    detail.innerHTML = `<div class="when">${esc(d.when)}${d.kind === "side" ? " · side branch" : ""}</div><h3>${esc(d.title)}</h3><div class="where">${esc(d.where)}</div>
+      ${(draft && !SHOW_DRAFTS) ? "" : `<span class="k">${d.kind === "future" ? "What I want to work on" : "What it taught me"}${draft ? " · draft" : ""}</span>
+      <p class="note">${draft ? `<span class="draft">${esc(d.note.slice(6).trim())}</span>` : esc(d.note)}</p>`}
+      <div class="navb"><button data-go="${order[(i + order.length - 1) % order.length]}">← earlier</button><button data-go="${order[(i + 1) % order.length]}">later →</button></div>`;
+  };
+  detail.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) show(b.dataset.go); });
+
+  TRAJECTORY.forEach(d => {
+    const col = d.kind === "future" ? "var(--k4)" : d.kind === "side" ? "var(--faint)" : "var(--accent)";
+    const g = el("g", { class: `node ${d.kind}`, tabindex: 0, role: "button", "aria-label": `${d.when}: ${d.title}`, "data-id": d.id, style: `--col:${col}` }, ng);
+    el("circle", { class: "halo", cx: d.x, cy: d.y, r: 14, "stroke-width": 6 }, g);
+    el("circle", { class: "dot", cx: d.x, cy: d.y, r: d.kind === "side" ? 5.5 : 7 }, g);
+    const up = d.kind === "side" && d.y < 150;
+    const ty = up ? d.y - 32 : d.y + 30;
+    el("text", { x: d.x, y: ty, "text-anchor": "middle", class: "when" }, g).textContent = d.when;
+    el("text", { x: d.x, y: ty + 15, "text-anchor": "middle" }, g).textContent = d.label;
+    g.addEventListener("click", () => show(d.id));
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(d.id); } });
+  });
+  show(by[DEFAULT_NODE] ? DEFAULT_NODE : order[0]);
+  new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { svg.classList.add("go"); o.disconnect(); } }), { threshold: .3 }).observe(svg);
+})();
+
+/* ---------- toolkit dot plot ---------- */
+(() => {
+  const sizes = [0, 7, 13, 19];
+  let h = `<thead><tr><th></th>${PROJECTS.map(p => `<th style="color:${p.col}">${esc(p.name)}<span>${esc(p.sub)}</span></th>`).join("")}</tr></thead><tbody>`;
+  for (const [grp, rows] of Object.entries(TOOLS)) {
+    h += `<tr class="grp"><th colspan="${PROJECTS.length + 1}">${esc(grp)}</th></tr>`;
+    for (const [tool, v] of Object.entries(rows))
+      h += `<tr><th class="row">${esc(tool)}</th>${v.map((x, i) => `<td title="${esc(tool)} · ${esc(PROJECTS[i].name)}">${x ? `<i class="d" style="--c:${PROJECTS[i].col};width:${sizes[x]}px;height:${sizes[x]}px"></i>` : ""}</td>`).join("")}</tr>`;
+  }
+  document.getElementById("dp").innerHTML = h + "</tbody>";
+  document.getElementById("learning").outerHTML = LEARNING.map(l => /^TODO/.test(l)
+    ? `<span class="pill draft">${esc(l.replace(/^TODO:?\s*/, ""))}</span>` : `<span class="pill">${esc(l)}</span>`).join("");
+})();
+
+/* ---------- contact ---------- */
+(() => {
+  const m = document.getElementById("mail"), c = document.getElementById("copy");
+  m.href = "mailto:" + EMAIL; document.getElementById("addr").textContent = EMAIL;
+  c.addEventListener("click", () => (navigator.clipboard ? navigator.clipboard.writeText(EMAIL) : Promise.reject())
+    .then(() => { c.textContent = "copied ✓"; setTimeout(() => { c.innerHTML = '<span id="addr"></span> · copy'; document.getElementById("addr").textContent = EMAIL; }, 1600); }, () => {}));
+})();
+
+/* ---------- nav, theme, reveal ---------- */
+(() => {
+  const nav = document.getElementById("nav");
+  const links = [...nav.querySelectorAll("ul a[href^='#']")], secs = links.map(a => document.querySelector(a.getAttribute("href")));
+  const onScroll = () => {
+    nav.classList.toggle("solid", scrollY > 40);
+    let cur = -1; secs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * .4) cur = i; });
+    links.forEach((a, i) => a.classList.toggle("cur", i === cur));
+  };
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  // logo: abbreviated in the hero, unfolds on press/hover, and stays unfolded once the hero is scrolled past
+  const mark = document.getElementById("mark"), hero = document.getElementById("top");
+  let pinned = false;
+  const sync = () => mark.classList.toggle("full", pinned || hero.getBoundingClientRect().bottom < 120);
+  mark.addEventListener("click", e => { if (!mark.classList.contains("full")) { e.preventDefault(); pinned = true; sync(); } });
+  addEventListener("scroll", sync, { passive: true }); sync();
+
+
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll(".reveal").forEach(n => io.observe(n));
+})();
+</script>
+</body>
+</html>

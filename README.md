@@ -13,3 +13,7 @@ Everything is in `index.html`. Editable content is near the top of the `<script>
 - `LEARNING` — the "currently learning" pills.
 
 To add a CV, upload `cv.pdf` to this repository and un-comment the CV link in the nav.
+
+## Snapshots
+
+- `embl/` — frozen copy submitted with the EMBL International PhD Programme application (12 Oct 2026), served at `/embl/`. Don't edit it; change the main `index.html` instead. Git tag: `embl-2026`.
