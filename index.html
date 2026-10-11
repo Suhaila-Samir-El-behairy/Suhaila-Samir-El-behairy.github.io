@@ -678,7 +678,7 @@ const FIGS = (() => {
     svg.querySelectorAll(".node").forEach(g => g.classList.toggle("sel", g.dataset.id === id));
     detail.style.setProperty("--col", col);
     detail.innerHTML = `<div class="when">${esc(d.when)}${d.kind === "side" ? " · side branch" : ""}</div><h3>${esc(d.title)}</h3><div class="where">${esc(d.where)}</div>
-      ${(draft && !SHOW_DRAFTS) ? "" : `<span class="k">${d.kind === "future" ? "Next" : "What it taught me"}${draft ? " · draft" : ""}</span>
+      ${(draft && !SHOW_DRAFTS) ? "" : `<span class="k">${d.kind === "future" ? "What I want to work on" : "What it taught me"}${draft ? " · draft" : ""}</span>
       <p class="note">${draft ? `<span class="draft">${esc(d.note.slice(6).trim())}</span>` : esc(d.note)}</p>`}
       <div class="navb"><button data-go="${order[(i + order.length - 1) % order.length]}">← earlier</button><button data-go="${order[(i + 1) % order.length]}">later →</button></div>`;
   };
