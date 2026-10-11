@@ -308,7 +308,7 @@
             <div class="count"><b>01 / 04</b><i>Simulated truth</i></div>
             <h3>Know the answer, <em>then test.</em></h3>
             <div class="inline-fig" data-fig="0"></div>
-            <p>Real single-cell data has no answer key, so I made one. Using <strong>Splatter</strong>, with parameters estimated from real 10x samples, I simulated datasets of 10k to 1M cells across 12 known populations. Then I ran <strong>170 end-to-end workflows</strong> across Seurat, SingleCellExperiment and Scanpy, covering normalization, feature selection, dimensionality reduction and clustering. I then validated the selected workflows on a <strong>real lung tumour/normal dataset</strong>, where no ground-truth labels exist.</p>
+            <p>Real single-cell data has no answer key, so we made one. Using <strong>Splatter</strong>, with parameters estimated from real 10x samples, we simulated datasets of 10k to 1M cells across 12 known populations. Then we ran <strong>170 end-to-end workflows</strong> across Seurat, SingleCellExperiment and Scanpy, covering normalization, feature selection, dimensionality reduction and clustering. We then validated the selected workflows on a <strong>real lung tumour/normal dataset</strong>, where no ground-truth labels exist.</p>
             <p>The main lesson: <strong>good clustering scores do not guarantee that the true cell populations are recovered.</strong></p>
             <div class="metrics"><span>cluster purity</span><span>silhouette</span><span>RMSD</span><span>runtime</span><span>annotation</span><span>trajectory · Monocle3</span></div>
             <div class="paper">
@@ -322,8 +322,8 @@
             <div class="count"><b>02 / 04</b><i>Real tumours</i></div>
             <h3>When the labels <em>run out.</em></h3>
             <div class="inline-fig" data-fig="1"></div>
-            <p>I profiled <strong>17 neuroblastoma samples</strong>, resolving 16 clusters across nine cell types, including six distinct tumour subpopulations and a rare plasma cell population.</p>
-            <p>Without ground truth, independent lines of evidence have to agree. I used ligand–receptor modelling (13 core pathways) to map tumour–immune crosstalk, and inferCNV to tie transcriptional states to chromosomal changes such as MYCN-associated 2p gains. Trajectory analysis pointed to convergent developmental programs rather than a single lineage.</p>
+            <p>We profiled <strong>17 neuroblastoma samples</strong>, resolving 16 clusters across nine cell types, including six distinct tumour subpopulations and a rare plasma cell population.</p>
+            <p>Without ground truth, independent lines of evidence have to agree. We used ligand–receptor modelling (13 core pathways) to map tumour–immune crosstalk, and inferCNV to tie transcriptional states to chromosomal changes such as MYCN-associated 2p gains. Trajectory analysis pointed to convergent developmental programs rather than a single lineage.</p>
             <p>Linking predicted ligand–receptor interactions to tumour signalling pathways left me with the question I want to answer next: <strong>which of these interactions are functionally important?</strong></p>
             <div class="paper">
               <div class="venue">Under review · Scientific Reports · second author</div>
@@ -336,8 +336,8 @@
             <div class="count"><b>03 / 04</b><i>Interpretability</i></div>
             <h3>94% accurate, <em>until you split by patient.</em></h3>
             <div class="inline-fig" data-fig="2"></div>
-            <p>For my undergraduate thesis I designed a <strong>dual-branch 2D CNN</strong>, with small- and large-kernel stacks, to classify Alzheimer's disease, MCI and healthy controls from T1-weighted MRI (ADNI, 505 subjects, 1:23.7 class imbalance). It reached 94% accuracy on MRI slices, but <strong>balanced accuracy fell to 60–75% once I split by participant</strong>, so that slices from the same person could no longer appear in both training and test sets. That taught me how easily performance can mislead without careful validation.</p>
-            <p>It also made me ask whether explanations highlight meaningful anatomy. Standard tools didn't work with the dual-branch architecture, so I built <strong>EfficientMCIAnalyzer</strong>, which generates LIME heatmaps and splits predictions into four misclassification sub-classes to check whether the model relies on clinically relevant regions or on imaging artifacts.</p>
+            <p>For our undergraduate thesis we designed a <strong>dual-branch 2D CNN</strong>, with small- and large-kernel stacks, to classify Alzheimer's disease, MCI and healthy controls from T1-weighted MRI (ADNI, 505 subjects, 1:23.7 class imbalance). It reached 94% accuracy on MRI slices, but <strong>balanced accuracy fell to 60–75% once we split by participant</strong>, so that slices from the same person could no longer appear in both training and test sets. That taught me how easily performance can mislead without careful validation.</p>
+            <p>It also made me ask whether explanations highlight meaningful anatomy. Standard tools didn't work with the dual-branch architecture, so we built <strong>EfficientMCIAnalyzer</strong>, which generates LIME heatmaps and splits predictions into four misclassification sub-classes to check whether the model relies on clinically relevant regions or on imaging artifacts.</p>
             <div class="paper">
               <div class="venue">Undergraduate thesis · ITIDA-funded</div>
               <div class="t">An Interpretable 2D Dual-CNN Framework for Alzheimer's Disease Detection from Structural MRI Slices</div>
@@ -349,7 +349,7 @@
             <div class="count"><b>04 / 04</b><i>Causal inference</i></div>
             <h3>From association <em>to cause.</em></h3>
             <div class="inline-fig" data-fig="3"></div>
-            <p>Before an imaging phenotype can be tested against genetic variation, it has to be defined. In <strong>DiagNexus</strong>, I benchmarked the model against VGG-16 transfer learning and used LIME and SHAP to localise discriminative regions. I then linked those regional volumes to ADNI genetic variants with LASSO regression and two-stage least-squares <strong>Mendelian randomization</strong>.</p>
+            <p>Before an imaging phenotype can be tested against genetic variation, it has to be defined. In <strong>DiagNexus</strong>, we benchmarked the model against VGG-16 transfer learning and used LIME and SHAP to localise discriminative regions. We then linked those regional volumes to ADNI genetic variants with LASSO regression and two-stage least-squares <strong>Mendelian randomization</strong>.</p>
             <div class="paper">
               <div class="venue">Manuscript in preparation · co-first author</div>
               <div class="t">DiagNexus: An Interpretable CNN-Based CAD System for Early Alzheimer's Diagnosis and Genetic Risk Analysis</div>
