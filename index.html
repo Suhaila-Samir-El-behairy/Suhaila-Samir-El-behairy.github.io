@@ -57,7 +57,7 @@
   #field .drift { animation: drift var(--dur) ease-in-out infinite alternate; }
   @keyframes drift { to { transform: translate(var(--dx), var(--dy)); } }
   #field .lab { font: 10.5px "JetBrains Mono", monospace; fill: var(--col); opacity: .7; letter-spacing: .04em; transition: opacity .3s; pointer-events: none; }
-  #field .hint { font: 10px "JetBrains Mono", monospace; fill: var(--muted); opacity: .8; }
+  .cl-hint { font: .74rem "JetBrains Mono", monospace; color: var(--muted); letter-spacing: .02em; }
   #field.hovering .cl:not(.on) { opacity: .28; }
   #field .cl.on .pts { transform: scale(1.1); opacity: 1; }
   #field .cl.on .lab, #field .cl:focus-visible .lab { opacity: 1; text-decoration: underline; }
@@ -240,7 +240,7 @@
     .pub { grid-template-columns: 1fr; gap: 6px; }
     .traj-grid { grid-template-columns: 1fr; }
     #field { width: 100%; opacity: .3; pointer-events: none; }
-    #field .lab, #field .hint { display: none; }
+    #field .lab, .cl-hint { display: none; }
   }
   @media (max-width: 560px) {
     .nav ul { gap: 16px; }
@@ -286,8 +286,8 @@
   </div>
   <div class="foot">
     <div class="wrap">
-      <div class="tags"><span>Post-bac RA · BCBU, Zewail City</span><span>B.Sc. Magna Cum Laude</span><span>Applying to PhD programs</span></div>
-      <div class="tags"><span>Giza, Egypt</span></div>
+      <div class="tags"><span>Post-bac RA · BCBU, Zewail City</span><span>B.Sc. Magna Cum Laude</span><span>Applying to PhD programs</span><span>Giza, Egypt</span></div>
+      <div class="cl-hint">each cluster is a chapter · click one ↗</div>
     </div>
   </div>
 </div>
@@ -575,8 +575,7 @@ const gaussFrom = r => () => { let u = 0, v = 0; while (!u) u = r(); while (!v) 
       <ellipse class="hit" cx="${c.x}" cy="${c.y}" rx="${c.sx * 2.5 + 10}" ry="${c.sy * 2.5 + 10}" transform="rotate(${(c.rot * 57.3).toFixed(0)} ${c.x} ${c.y})"/>
       <g class="drift"><g class="pts">${pts[k]}</g></g>
       <text class="lab" x="${c.lx}" y="${c.ly}">${c.label}</text>
-    </g>`).join("") +
-    `<text class="hint" x="300" y="520" text-anchor="middle">each cluster is a chapter · click one</text>`;
+    </g>`).join("");
 
   const groups = [...svg.querySelectorAll(".cl")];
   const focus = k => { svg.classList.toggle("hovering", k !== null); groups.forEach((gr, j) => gr.classList.toggle("on", j === k)); };
