@@ -16,4 +16,4 @@ To add a CV, upload `cv.pdf` to this repository and un-comment the CV link in th
 
 ## Snapshots
 
-- `embl/` — frozen copy submitted with the EMBL International PhD Programme application (12 Oct 2026), served at `/embl/`. Don't edit it; change the main `index.html` instead. Git tag: `embl-2026`.
+- `embl/` — frozen copy submitted with the EMBL International PhD Programme application (12 Oct 2026), served at `/embl/`. Don't edit it; change the main `index.html` instead.
