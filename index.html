@@ -308,7 +308,7 @@
             <div class="count"><b>01 / 04</b><i>Simulated truth</i></div>
             <h3>Know the answer, <em>then test.</em></h3>
             <div class="inline-fig" data-fig="0"></div>
-            <p>Real single-cell data has no answer key, so I made one. Using <strong>Splatter</strong>, with parameters estimated from real 10x samples, I simulated datasets of 10k to 1M cells across 12 known populations. Then I ran <strong>170 end-to-end workflows</strong> across Seurat, SingleCellExperiment and Scanpy, covering normalization, feature selection, dimensionality reduction and clustering.</p>
+            <p>Real single-cell data has no answer key, so I made one. Using <strong>Splatter</strong>, with parameters estimated from real 10x samples, I simulated datasets of 10k to 1M cells across 12 known populations. Then I ran <strong>170 end-to-end workflows</strong> across Seurat, SingleCellExperiment and Scanpy, covering normalization, feature selection, dimensionality reduction and clustering. I then validated the selected workflows on a <strong>real lung tumour/normal dataset</strong>, where no ground-truth labels exist.</p>
             <p>The main lesson: <strong>good clustering scores do not guarantee that the true cell populations are recovered.</strong></p>
             <div class="metrics"><span>cluster purity</span><span>silhouette</span><span>RMSD</span><span>runtime</span><span>annotation</span><span>trajectory · Monocle3</span></div>
             <div class="paper">
@@ -322,7 +322,7 @@
             <div class="count"><b>02 / 04</b><i>Real tumours</i></div>
             <h3>When the labels <em>run out.</em></h3>
             <div class="inline-fig" data-fig="1"></div>
-            <p>Simulations only go so far. I validated the selected workflows on a real lung tumour/normal dataset, and profiled <strong>17 neuroblastoma samples</strong>: 16 clusters across nine cell types, including six distinct tumour subpopulations and a rare plasma cell population.</p>
+            <p>I profiled <strong>17 neuroblastoma samples</strong>, resolving 16 clusters across nine cell types, including six distinct tumour subpopulations and a rare plasma cell population.</p>
             <p>Without ground truth, independent lines of evidence have to agree. I used ligand–receptor modelling (13 core pathways) to map tumour–immune crosstalk, and inferCNV to tie transcriptional states to chromosomal changes such as MYCN-associated 2p gains. Trajectory analysis pointed to convergent developmental programs rather than a single lineage.</p>
             <p>Linking predicted ligand–receptor interactions to tumour signalling pathways left me with the question I want to answer next: <strong>which of these interactions are functionally important?</strong></p>
             <div class="paper">
